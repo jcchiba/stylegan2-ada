@@ -198,25 +198,19 @@ def setup_training_options(
     args.G_args.num_fp16_res = args.D_args.num_fp16_res = 4 # enable mixed-precision training
     args.G_args.conv_clamp = args.D_args.conv_clamp = 256 # clamp activations to avoid float16 overflow
 
-    #if cifar_tuning is None:
-    #    cifar_tuning = False
-    #else:
-    #    assert isinstance(cifar_tuning, bool)
-    #    if cifar_tuning:
-    #        desc += '-tuning'
-#
+    
     if cfg == 'cifar':
         args.loss_args.pl_weight = 0 # disable path length regularization
         args.G_args.style_mixing_prob = None # disable style mixing
         args.D_args.architecture = 'orig' # disable residual skip connections
-#
+
     
     if gamma is not None:
         assert isinstance(gamma, float)
         if not gamma >= 0:
            raise UserError('--gamma must be non-negative')
-       desc += f'-gamma{gamma:g}'
-       args.loss_args.r1_gamma = gamma
+        desc += f'-gamma{gamma:g}'
+        args.loss_args.r1_gamma = gamma
 
     if kimg is not None:
         assert isinstance(kimg, int)
